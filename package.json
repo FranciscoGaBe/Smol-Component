@@ -1,0 +1,23 @@
+{
+  "name": "smol-component",
+  "version": "1.0.0",
+  "description": "Small, lightweight component framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FranciscoGaBe/Smol-Component.git"
+  },
+  "author": "Francisco Garrido",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FranciscoGaBe/Smol-Component/issues"
+  },
+  "homepage": "https://github.com/FranciscoGaBe/Smol-Component#readme",
+  "devDependencies": {
+    "jest": "^27.3.1",
+    "eslint": "^8.1.0"
+  }
+}
