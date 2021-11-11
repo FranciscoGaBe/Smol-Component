@@ -12,7 +12,7 @@ export default dataTree => {
 
 		if ($elementData.attributes) $elementData.attributes.forEach(([ attrName, value ]) => {
 
-			const matches = matchInterpolation(value)
+			const matches = matchInterpolation('' + value)
 
 			matches.forEach(({ 1: prop, input }) => {
 
