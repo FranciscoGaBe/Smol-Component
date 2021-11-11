@@ -16,6 +16,12 @@ export default dataTree => {
 
 			matches.forEach(({ 1: prop, input }) => {
 
+				if (attrName.slice(0,2) === 'on' && $element[attrName.toLowerCase()] !== undefined) {
+
+					$element[attrName.toLowerCase()] = $element.getMethod(prop)
+					return
+
+				}
 				if (!dependencies.hasOwnProperty(prop)) dependencies[prop] = []
 				dependencies[prop].push(
 					state => $element.updateProp ? 
