@@ -2,6 +2,14 @@ const interpolationRegex = /{{\s*(.*?)\s*}}/gi
 
 const matchInterpolation = text => [ ...text.matchAll(interpolationRegex) ]
 
+const styleObjectToString = style => {
+
+	const camelToKebab = text => text.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)
+
+	return Object.entries(style).map(([ style, value ]) => `${ camelToKebab(style) }:${ value }`).join(';')
+
+}
+
 export default dataTree => {
 
 	const dependencies = {}
@@ -30,7 +38,8 @@ export default dataTree => {
 
 						const value = state[prop]
 						if (typeof value !== 'object') $element.setAttribute(attrName, value)
-						else Object.entries(value).forEach(([ style, value ]) => $element.style[style] = value)
+						else $element.setAttribute(attrName, styleObjectToString(value))
+						console.log(styleObjectToString(value))
 
 					})
 
