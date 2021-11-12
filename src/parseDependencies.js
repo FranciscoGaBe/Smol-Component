@@ -23,6 +23,20 @@ export default dataTree => {
 
 				}
 				if (!dependencies.hasOwnProperty(prop)) dependencies[prop] = []
+
+				if (attrName === 'style') {
+
+					dependencies[prop].push(state => {
+
+						const value = state[prop]
+						if (typeof value !== 'object') $element.setAttribute(attrName, value)
+						else Object.entries(value).forEach(([ style, value ]) => $element.style[style] = value)
+
+					})
+
+					return
+				}
+				
 				dependencies[prop].push(
 					state => $element.updateProp ? 
 						$element.updateProp(attrName, state[prop]) :
