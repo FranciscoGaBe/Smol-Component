@@ -137,7 +137,21 @@ const mountElements = (dataTree, parent, mount) => {
 
 	})
 
-	if (dataTree.$element.component) mount(parent, dataTree.$element.component)
+	if (dataTree.$element.component) {
+
+		const component = dataTree.$element.component
+		const attributes = dataTree.$elementData.attributes
+
+		component.$options.props.forEach(prop => {
+
+			const value = (attributes.find(attr => attr[0] === prop) || [])[1]
+
+			component.$updateProp(prop, value)
+
+		})
+		mount(parent, component)
+
+	}
 	else parent.appendChild(dataTree.$element)
 
 }

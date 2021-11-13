@@ -304,3 +304,33 @@ test('child components properly mounts on it\'s corresponding element', () => {
 	document.body.removeChild(parent.$element)
 
 })
+
+test('static props gets proparly passed down to child component', () => {
+
+	const child = Component({
+		name: 'child',
+		template: '<div>{{ test }}</div>',
+		props: [ 'test', 'prop' ],
+	})
+
+	const parent = Component({
+		name: 'parent',
+		template: `
+		<div class="parent-component">
+			<h2>Title</h2>
+			<div class="container">
+				<Child test="This is a test"/>
+			</div>
+		</div>
+		`,
+		components: { Child: child }
+	})(true)
+
+	parent.$mount(document.body)
+	const childElement = parent.$element.querySelector('[data-sc-name="child"]')
+
+	expect(childElement.innerHTML).toBe('This is a test')
+
+	document.body.removeChild(parent.$element)
+
+})
