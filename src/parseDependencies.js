@@ -39,7 +39,6 @@ export default dataTree => {
 						const value = state[prop]
 						if (typeof value !== 'object') $element.setAttribute(attrName, value)
 						else $element.setAttribute(attrName, styleObjectToString(value))
-						console.log(styleObjectToString(value))
 
 					})
 
