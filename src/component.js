@@ -144,8 +144,8 @@ const mountElements = (dataTree, parent, mount) => {
 
 const mountComponent = component => (parent) => {
 
-	mountElements(component.$dataTree, parent.$element || parent, child => child.$mount(component))
 	if (parent.$element) prepareChild(component, parent)
+	mountElements(component.$dataTree, parent.$element || parent, child => child.$mount(component))
 	setGlobals(component)
 	component.$forceUpdate()
 	component.$element.setAttribute('data-sc-name', component.$name)

@@ -223,3 +223,54 @@ test('globalState is can be accessed by any component and updates correctly', ()
 	document.body.removeChild(parent.$element)
 
 })
+
+test('all childs have access to $root', () => {
+
+	const child3 = Component({
+		name: 'child2',
+		template: '<div></div>',
+		onMounted: function () {
+
+			expect(this.$root).toEqual(expect.anything())
+
+		}
+	})
+
+	const child2 = Component({
+		name: 'child2',
+		template: '<div><Child3 /></div>',
+		components: { Child3: child3 },
+		onMounted: function () {
+
+			expect(this.$root).toEqual(expect.anything())
+
+		}
+	})
+
+	const child = Component({
+		name: 'child1',
+		template: '<div><Child2 /></div>',
+		components: { Child2: child2 },
+		onMounted: function () {
+
+			expect(this.$root).toEqual(expect.anything())
+
+		}
+	})
+
+	const parent = Component({
+		name: 'parent',
+		template: `
+		<div>
+			<Child />
+		</div>
+		`,
+		components: { Child: child }
+	})(true)
+
+	expect.assertions(3)
+	parent.$mount(document.body)
+
+	document.body.removeChild(parent.$element)
+
+})
