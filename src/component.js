@@ -129,11 +129,11 @@ const setGlobalWatch = component => {
 
 const setGlobals = component => setGlobalWatch(setGlobalState(component))
 
-const mountElements = (dataTree, parent, mount) => {
+const mountElements = (dataTree, parent, parentComponent = null) => {
 
 	dataTree.$elementData.children.forEach(child => {
 
-		mountElements(child, dataTree.$element, mount)
+		mountElements(child, dataTree.$element, parentComponent)
 
 	})
 
@@ -144,12 +144,12 @@ const mountElements = (dataTree, parent, mount) => {
 
 		component.$options.props.forEach(prop => {
 
-			const value = (attributes.find(attr => attr[0] === prop) || [])[1]
+			const value = (parentComponent && parentComponent[prop]) || (attributes.find(attr => attr[0] === prop) || [])[1]
 
 			component.$updateProp(prop, value)
 
 		})
-		mount(parent, component)
+		component.$mount(parent, parentComponent)
 
 	}
 	else parent.appendChild(dataTree.$element)
@@ -159,7 +159,7 @@ const mountElements = (dataTree, parent, mount) => {
 const mountComponent = component => (parent, parentComponent = null) => {
 
 	if (parentComponent) prepareChild(component, parentComponent)
-	mountElements(component.$dataTree, parent.$element || parent, (parent, child) => child.$mount(parent, component))
+	mountElements(component.$dataTree, parent, component)
 	setGlobals(component)
 	component.$forceUpdate()
 	component.$element.setAttribute('data-sc-name', component.$name)

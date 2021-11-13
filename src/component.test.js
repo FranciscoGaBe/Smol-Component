@@ -334,3 +334,38 @@ test('static props gets proparly passed down to child component', () => {
 	document.body.removeChild(parent.$element)
 
 })
+
+test('dynamic props are properly assigned on mounted', () => {
+
+	const child = Component({
+		name: 'child',
+		template: '<div>{{ test }}</div>',
+		props: [ 'test' ],
+		onMounted: function () {
+
+			expect(this.test).toBe('This is a test')
+
+		}
+	})
+
+	const parent = Component({
+		name: 'parent',
+		template: `
+		<div class="parent-component">
+			<h2>Title</h2>
+			<div class="container">
+				<Child test="{{ test }}"/>
+			</div>
+		</div>
+		`,
+		components: { Child: child },
+		state: {
+			test: 'This is a test'
+		}
+	})(true)
+
+	parent.$mount(document.body)
+
+	document.body.removeChild(parent.$element)
+
+})
