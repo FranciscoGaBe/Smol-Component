@@ -274,3 +274,33 @@ test('all childs have access to $root', () => {
 	document.body.removeChild(parent.$element)
 
 })
+
+test('child components properly mounts on it\'s corresponding element', () => {
+
+	const child = Component({
+		name: 'child',
+		template: '<div></div>',
+		globalState: [ 'globalCounter' ],
+	})
+
+	const parent = Component({
+		name: 'parent',
+		template: `
+		<div class="parent-component">
+			<h2>Title</h2>
+			<div class="container">
+				<Child />
+			</div>
+		</div>
+		`,
+		components: { Child: child }
+	})(true)
+
+	parent.$mount(document.body)
+	const childElement = parent.$element.querySelector('[data-sc-name="child"]')
+
+	expect(childElement.parentNode.className).toBe('container')
+
+	document.body.removeChild(parent.$element)
+
+})

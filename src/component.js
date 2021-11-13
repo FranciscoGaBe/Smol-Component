@@ -137,20 +137,19 @@ const mountElements = (dataTree, parent, mount) => {
 
 	})
 
-	if (dataTree.$element.component) mount(dataTree.$element.component)
+	if (dataTree.$element.component) mount(parent, dataTree.$element.component)
 	else parent.appendChild(dataTree.$element)
 
 }
 
-const mountComponent = component => (parent) => {
+const mountComponent = component => (parent, parentComponent = null) => {
 
-	if (parent.$element) prepareChild(component, parent)
-	mountElements(component.$dataTree, parent.$element || parent, child => child.$mount(component))
+	if (parentComponent) prepareChild(component, parentComponent)
+	mountElements(component.$dataTree, parent.$element || parent, (parent, child) => child.$mount(parent, component))
 	setGlobals(component)
 	component.$forceUpdate()
 	component.$element.setAttribute('data-sc-name', component.$name)
-	if (parent.$element) parent.$element.appendChild(component.$element)
-	else parent.appendChild(component.$element)
+	parent.appendChild(component.$element)
 	component.$options.onMounted.bind(component)()
 
 }
