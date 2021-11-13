@@ -30,7 +30,7 @@ export default template => {
 		if (!lastMatch) return null
 
 		const lastMatchEnd = lastMatch.index + lastMatch[0].length
-		if (match.index - lastMatchEnd < 2) return null
+		if (match.index - lastMatchEnd < 1) return null
 
 		const text = match.input.slice(lastMatchEnd, match.index)
 		if (!text.trim()) return null

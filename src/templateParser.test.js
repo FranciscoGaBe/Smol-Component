@@ -51,3 +51,18 @@ test('turns template into a tree of elements and children', () => {
 	expect(templateParser(template)).toEqual(expected)
 
 })
+
+test('parses a text of 1 character inside a one line element', () => {
+
+	const template = `
+		<div>A</div>
+	`
+
+	const expected = expect.objectContaining({
+		type: 'div',
+		children: [ expect.objectContaining({ type: 'textNode', content: 'A' }) ]
+	})
+
+	expect(templateParser(template)).toEqual(expected)
+
+})
