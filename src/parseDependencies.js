@@ -24,9 +24,10 @@ export default dataTree => {
 
 			matches.forEach(({ 1: prop, input }) => {
 
-				if (attrName.slice(0,2) === 'on' && $element[attrName.toLowerCase()] !== undefined) {
+				const element = $element.component ? $element.component.$element : $element
+				if (attrName.slice(0,2) === 'on' && element[attrName.toLowerCase()] !== undefined) {
 
-					$element[attrName.toLowerCase()] = $element.getMethod(prop)
+					element[attrName.toLowerCase()] = $element.getMethod(prop)
 					return
 
 				}

@@ -369,3 +369,36 @@ test('dynamic props are properly assigned on mounted', () => {
 	document.body.removeChild(parent.$element)
 
 })
+
+test('event gets assigned to child component', () => {
+
+	const child = Component({
+		name: 'child',
+		template: '<div>{{ test }}</div>'
+	})
+
+	const parent = Component({
+		name: 'parent',
+		template: `
+		<div class="parent-component">
+			<h2>Title</h2>
+			<div class="container">
+				<Child onClick="{{ onClick }}"/>
+			</div>
+		</div>
+		`,
+		components: { Child: child },
+		methods: {
+			onClick: function () { expect(true).toBe(true) }
+		}
+	})(true)
+
+	expect.assertions(1)
+	parent.$mount(document.body)
+	const childElement = parent.$element.querySelector('[data-sc-name="child"]')
+
+	childElement.click()
+
+	document.body.removeChild(parent.$element)
+
+})
